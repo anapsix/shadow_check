@@ -1,4 +1,9 @@
 #!/usr/bin/env bash
 
-env GOOS=linux GOARCH=amd64 go build -o pkgs/shadow_check-linux_amd64
-env GOOS=darwin GOARCH=amd64 go build -o pkgs/shadow_check-darwin_amd64
+GOARCH=amd64
+
+for GOOS in linux darwin; do
+  echo "Building for $GOOS/$GOARCH.."
+  env GOOS=$GOOS GOARCH=$GOARCH go build -o pkgs/shadow_check-${GOOS}_${GOARCH}
+done
+which upx && upx pkgs/*

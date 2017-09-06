@@ -15,6 +15,12 @@ env GOOS=linux GOARCH=amd64 go build -o pkgs/shadow_check-linux_amd64
 env GOOS=darwin GOARCH=amd64 go build -o pkgs/shadow_check-darwin_amd64
 ```
 
+Reduce binary size with some UPX packing:
+```
+# install UPX with `brew install upx`
+upx pkgs/*
+```
+
 ### Usage
 
 Use it directly, like so:
@@ -24,7 +30,7 @@ shadow_check -user testuser -password mygoodpassword -shadow /tmp/testshadow
 shadow_check -user testuser -password mybadpassword -shadow /tmp/testshadow
 ```
 
-Could be used for OpenVPN verification of user's password
+Could be used for OpenVPN verification of user's password.  
 Add the following into OpenVPN's `server.conf`:
 ```
 auth-user-pass-verify check_user.sh via-env
